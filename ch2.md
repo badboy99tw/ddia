@@ -248,8 +248,8 @@ CODASYL中的查詢是透過利用遍歷記錄列和跟隨訪問路徑表在資�
 
 ```go
 if (user && user.name && !user.first_name) {
-	// Documents written before Dec 8, 2013 don't have first_name
-	user.first_name = user.name.split(" ")[0];
+    // Documents written before Dec 8, 2013 don't have first_name
+    user.first_name = user.name.split(" ")[0];
 }
 ```
 
@@ -257,8 +257,8 @@ if (user && user.name && !user.first_name) {
 
 ```sql
 ALTER TABLE users ADD COLUMN first_name text;
-UPDATE users SET first_name = split_part(name, ' ', 1); 		-- PostgreSQL
-UPDATE users SET first_name = substring_index(name, ' ', 1); 	-- MySQL
+UPDATE users SET first_name = split_part(name, ' ', 1);         -- PostgreSQL
+UPDATE users SET first_name = substring_index(name, ' ', 1);     -- MySQL
 ```
 
 模式變更的速度很慢，而且要求停運。它的這種壞名譽並不是完全應得的：大多數關係資料庫系統可在幾毫秒內執行`ALTER TABLE`語句。MySQL是一個值得注意的例外，它執行`ALTER TABLE`時會複製整個表，這可能意味著在更改一個大型表時會花費幾分鐘甚至幾個小時的停機時間，儘管存在各種工具來解決這個限制【24,25,26】。
@@ -370,7 +370,7 @@ SQL示例不確保任何特定的順序，因此不在意順序是否改變。�
 
 ```css
 li.selected > p {
-	background-color: blue;
+    background-color: blue;
 }
 ```
 
@@ -429,8 +429,8 @@ MapReduce既不是一個宣告式的查詢語言，也不是一個完全命令�
 
 ```sql
 SELECT
-	date_trunc('month', observation_timestamp) AS observation_month,
-	sum(num_animals)                           AS total_animals
+    date_trunc('month', observation_timestamp) AS observation_month,
+    sum(num_animals)                           AS total_animals
 FROM observations
 WHERE family = 'Sharks'
 GROUP BY observation_month;
@@ -600,12 +600,12 @@ Cypher是屬性圖的宣告式查詢語言，為Neo4j圖形資料庫而發明【
 
 ```cypher
 CREATE
-	(NAmerica:Location {name:'North America', type:'continent'}),
-	(USA:Location      {name:'United States', type:'country'  }),
-	(Idaho:Location    {name:'Idaho',         type:'state'    }),
-	(Lucy:Person       {name:'Lucy' }),
-	(Idaho) -[:WITHIN]->  (USA)  -[:WITHIN]-> (NAmerica),
-	(Lucy)  -[:BORN_IN]-> (Idaho)
+    (NAmerica:Location {name:'North America', type:'continent'}),
+    (USA:Location      {name:'United States', type:'country'  }),
+    (Idaho:Location    {name:'Idaho',         type:'state'    }),
+    (Lucy:Person       {name:'Lucy' }),
+    (Idaho) -[:WITHIN]->  (USA)  -[:WITHIN]-> (NAmerica),
+    (Lucy)  -[:BORN_IN]-> (Idaho)
 ```
 
 當[圖2-5](../img/fig2-5.png)的所有頂點和邊被新增到資料庫後，讓我們提些有趣的問題：例如，找到所有從美國移民到歐洲的人的名字。更確切地說，這裡我們想要找到符合下麵條件的所有頂點，並且返回這些頂點的`name`屬性：該頂點擁有一條連到美國任一位置的`BORN_IN`邊，和一條連到歐洲的任一位置的`LIVING_IN`邊。
@@ -616,8 +616,8 @@ CREATE
 
 ```cypher
 MATCH
-	(person) -[:BORN_IN]->  () -[:WITHIN*0..]-> (us:Location {name:'United States'}),
-	(person) -[:LIVES_IN]-> () -[:WITHIN*0..]-> (eu:Location {name:'Europe'})
+    (person) -[:BORN_IN]->  () -[:WITHIN*0..]-> (us:Location {name:'United States'}),
+    (person) -[:LIVES_IN]-> () -[:WITHIN*0..]-> (eu:Location {name:'Europe'})
 RETURN person.name
 ```
 
@@ -872,7 +872,7 @@ born_in(lucy, idaho).
 within_recursive(Location, Name) :- name(Location, Name). /* Rule 1 */
 
 within_recursive(Location, Name) :- within(Location, Via), /* Rule 2 */
-									within_recursive(Via, Name).
+                                    within_recursive(Via, Name).
 
 migrated(Name, BornIn, LivingIn) :- name(Person, Name), /* Rule 3 */
                                     born_in(Person, BornLoc),
